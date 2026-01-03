@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gesture Control Interface</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Gesture Control Interface</h1>
+            <div class="header-buttons">
+                <button id="startBtn" class="btn-orange"><i class="fas fa-play"></i> Start</button>
+                <button id="pauseBtn" class="btn-orange"><i class="fas fa-pause"></i> Pause</button>
+                </div>
+        </header>
+
+        <main>
+            <section class="left-panel">
+                <h2><i class="fas fa-video"></i> Live Gesture Control</h2>
+                <div class="video-container">
+                    <img src="{{ url_for('video_feed') }}" alt="Video Feed" id="videoFeed">
+                </div>
+            </section>
+
+            <section class="right-panel">
+                <h2><i class="fas fa-hand-paper"></i> Gesture Recognition</h2>
+                
+                <div class="gesture-card" id="card-open">
+                    <div class="icon-box green"><i class="fas fa-hand"></i></div>
+                    <div class="card-details">
+                        <h3>Open Hand</h3>
+                        <p>Distance &lt; 50mm</p>
+                    </div>
+                    <div class="status inactive">Inactive</div>
+                </div>
+
+                <div class="gesture-card active-card" id="card-pinch">
+                    <div class="icon-box orange"><i class="fas fa-hand-pointer"></i></div>
+                    <div class="card-details">
+                        <h3>Pinch</h3>
+                        <p>Distance &gt; 20mm</p>
+                    </div>
+                    <div class="status active">Active</div>
+                </div>
+
+                <div class="gesture-card" id="card-closed">
+                    <div class="icon-box red"><i class="fas fa-fist-raised"></i></div>
+                    <div class="card-details">
+                        <h3>Closed</h3>
+                        <p>Distance &gt; 20mm</p>
+                    </div>
+                    <div class="status inactive">Inactive</div>
+                </div>
+
+                <h2 class="metrics-title"><i class="fas fa-chart-line"></i> Performance Metrics</h2>
+                <div class="metrics-grid">
+                    <div class="metric-box">
+                        <h3 class="orange-text" id="vol-val">65%</h3>
+                        <p>CURRENT VOLUME</p>
+                    </div>
+                    <div class="metric-box">
+                        <h3 class="orange-text" id="dist-val">42mm</h3>
+                        <p>FINGER DISTANCE</p>
+                    </div>
+                    <div class="metric-box">
+                        <h3 class="orange-text" id="acc-val">98%</h3>
+                        <p>ACCURACY</p>
+                    </div>
+                    <div class="metric-box">
+                        <h3 class="orange-text" id="time-val">15ms</h3>
+                        <p>RESPONSE TIME</p>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
