@@ -3,78 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gesture Control Interface</title>
+    <title>AI Gesture Control</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Gesture Control Interface</h1>
+            <h1>Volume Gesture Control</h1>
             <div class="header-buttons">
-                <button id="startBtn" class="btn-orange"><i class="fas fa-play"></i> Start</button>
-                <button id="pauseBtn" class="btn-orange"><i class="fas fa-pause"></i> Pause</button>
-                </div>
+                <button id="startBtn" class="btn-gradient"><i class="fas fa-play"></i> Start</button>
+                <button id="pauseBtn" class="btn-gradient"><i class="fas fa-pause"></i> Pause</button>
+            </div>
         </header>
 
         <main>
             <section class="left-panel">
-                <h2><i class="fas fa-video"></i> Live Gesture Control</h2>
-                <div class="video-container">
+                <h2><i class="fas fa-video"></i> Live Camera Feed</h2>
+                <div class="video-wrapper">
                     <img src="{{ url_for('video_feed') }}" alt="Video Feed" id="videoFeed">
                 </div>
             </section>
 
             <section class="right-panel">
-                <h2><i class="fas fa-hand-paper"></i> Gesture Recognition</h2>
+                <h2><i class="fas fa-hand-sparkles"></i> Recognition Status</h2>
                 
                 <div class="gesture-card" id="card-open">
-                    <div class="icon-box green"><i class="fas fa-hand"></i></div>
-                    <div class="card-details">
-                        <h3>Open Hand</h3>
-                        <p>Distance &lt; 50mm</p>
+                    <div class="card-left-content">
+                        <div class="icon-box green"><i class="fas fa-hand"></i></div>
+                        <div class="card-details">
+                            <h3>Open Hand</h3>
+                            <p>Neutral / Idle</p>
+                        </div>
                     </div>
                     <div class="status inactive">Inactive</div>
                 </div>
 
-                <div class="gesture-card active-card" id="card-pinch">
-                    <div class="icon-box orange"><i class="fas fa-hand-pointer"></i></div>
-                    <div class="card-details">
-                        <h3>Pinch</h3>
-                        <p>Distance &gt; 20mm</p>
+                <div class="gesture-card" id="card-pinch">
+                    <div class="card-left-content">
+                        <div class="icon-box orange"><i class="fas fa-hand-pointer"></i></div>
+                        <div class="card-details">
+                            <h3>Pinch Mode</h3>
+                            <p>Volume Control</p>
+                        </div>
                     </div>
-                    <div class="status active">Active</div>
+                    <div class="status inactive">Inactive</div>
                 </div>
 
                 <div class="gesture-card" id="card-closed">
-                    <div class="icon-box red"><i class="fas fa-fist-raised"></i></div>
-                    <div class="card-details">
-                        <h3>Closed</h3>
-                        <p>Distance &gt; 20mm</p>
+                    <div class="card-left-content">
+                        <div class="icon-box red"><i class="fas fa-fist-raised"></i></div>
+                        <div class="card-details">
+                            <h3>Closed Fist</h3>
+                            <p>Standby Mode</p>
+                        </div>
                     </div>
                     <div class="status inactive">Inactive</div>
                 </div>
 
-                <h2 class="metrics-title"><i class="fas fa-chart-line"></i> Performance Metrics</h2>
+                <h2 class="metrics-title"><i class="fas fa-chart-pie"></i> Live Metrics</h2>
                 <div class="metrics-grid">
                     <div class="metric-box">
-                        <h3 class="orange-text" id="vol-val">65%</h3>
-                        <p>CURRENT VOLUME</p>
+                        <h3 id="vol-val">0%</h3>
+                        <p>VOLUME</p>
                     </div>
                     <div class="metric-box">
-                        <h3 class="orange-text" id="dist-val">42mm</h3>
-                        <p>FINGER DISTANCE</p>
+                        <h3 id="dist-val">0mm</h3>
+                        <p>DISTANCE</p>
                     </div>
                     <div class="metric-box">
-                        <h3 class="orange-text" id="acc-val">98%</h3>
+                        <h3 id="acc-val">0%</h3>
                         <p>ACCURACY</p>
                     </div>
                     <div class="metric-box">
-                        <h3 class="orange-text" id="time-val">15ms</h3>
-                        <p>RESPONSE TIME</p>
+                        <h3 id="time-val">0ms</h3>
+                        <p>LATENCY</p>
                     </div>
                 </div>
-
             </section>
         </main>
     </div>
