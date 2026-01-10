@@ -1,89 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Gesture Control</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Gesture Volume Control</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
     <div class="container">
-        <header>
-            <h1>Volume Gesture Control</h1>
-            <div class="header-buttons">
-                <button id="startBtn" class="btn-gradient"><i class="fas fa-play"></i> Start</button>
-                <button id="pauseBtn" class="btn-gradient"><i class="fas fa-pause"></i> Pause</button>
+      <header>
+        <h1>Volume Gesture Control</h1>
+        <div class="header-buttons">
+          <button id="startBtn" class="btn-gradient">
+            <i class="fas fa-play"></i> Start
+          </button>
+          <button id="pauseBtn" class="btn-gradient">
+            <i class="fas fa-pause"></i> Pause
+          </button>
+        </div>
+      </header>
+
+      <main>
+        <section class="left-panel">
+          <h2><i class="fas fa-video"></i> Live Camera Feed</h2>
+          <div class="video-wrapper">
+            <img
+              src="{{ url_for('video_feed') }}"
+              alt="Video Feed"
+              id="videoFeed"
+            />
+          </div>
+        </section>
+
+        <section class="right-panel">
+          <h2><i class="fas fa-hand-sparkles"></i> Recognition Status</h2>
+
+          <div class="gesture-card" id="card-open">
+            <div class="card-left-content">
+              <div class="icon-box green"><i class="fas fa-hand"></i></div>
+              <div class="card-details">
+                <h3>Open Hand</h3>
+                <p>Neutral / Idle</p>
+              </div>
             </div>
-        </header>
+            <div class="status inactive">Inactive</div>
+          </div>
 
-        <main>
-            <section class="left-panel">
-                <h2><i class="fas fa-video"></i> Live Camera Feed</h2>
-                <div class="video-wrapper">
-                    <img src="{{ url_for('video_feed') }}" alt="Video Feed" id="videoFeed">
-                </div>
-            </section>
+          <div class="gesture-card" id="card-pinch">
+            <div class="card-left-content">
+              <div class="icon-box orange">
+                <i class="fas fa-hand-pointer"></i>
+              </div>
+              <div class="card-details">
+                <h3>Pinch Mode</h3>
+                <p>Volume Control</p>
+              </div>
+            </div>
+            <div class="status inactive">Inactive</div>
+          </div>
 
-            <section class="right-panel">
-                <h2><i class="fas fa-hand-sparkles"></i> Recognition Status</h2>
-                
-                <div class="gesture-card" id="card-open">
-                    <div class="card-left-content">
-                        <div class="icon-box green"><i class="fas fa-hand"></i></div>
-                        <div class="card-details">
-                            <h3>Open Hand</h3>
-                            <p>Neutral / Idle</p>
-                        </div>
-                    </div>
-                    <div class="status inactive">Inactive</div>
-                </div>
+          <div class="gesture-card" id="card-closed">
+            <div class="card-left-content">
+              <div class="icon-box red"><i class="fas fa-fist-raised"></i></div>
+              <div class="card-details">
+                <h3>Closed Fist</h3>
+                <p>Mute Mode</p>
+              </div>
+            </div>
+            <div class="status inactive">Inactive</div>
+          </div>
 
-                <div class="gesture-card" id="card-pinch">
-                    <div class="card-left-content">
-                        <div class="icon-box orange"><i class="fas fa-hand-pointer"></i></div>
-                        <div class="card-details">
-                            <h3>Pinch Mode</h3>
-                            <p>Volume Control</p>
-                        </div>
-                    </div>
-                    <div class="status inactive">Inactive</div>
-                </div>
+          <h2 class="metrics-title">
+            <i class="fas fa-chart-pie"></i> Live Metrics
+          </h2>
+          <div class="metrics-grid">
+            <div class="metric-box">
+              <h3 id="vol-val">0%</h3>
+              <p>VOLUME</p>
+            </div>
+            <div class="metric-box">
+              <h3 id="dist-val">0mm</h3>
+              <p>DISTANCE</p>
+            </div>
+            <div class="metric-box">
+              <h3 id="acc-val">0%</h3>
+              <p>ACCURACY</p>
+            </div>
+            <div class="metric-box">
+              <h3 id="time-val">0ms</h3>
+              <p>LATENCY</p>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
 
-                <div class="gesture-card" id="card-closed">
-                    <div class="card-left-content">
-                        <div class="icon-box red"><i class="fas fa-fist-raised"></i></div>
-                        <div class="card-details">
-                            <h3>Closed Fist</h3>
-                            <p>Standby Mode</p>
-                        </div>
-                    </div>
-                    <div class="status inactive">Inactive</div>
-                </div>
+    <div id="volume-overlay" class="win11-flyout hidden">
+      <div class="flyout-handle"></div>
+      <div class="flyout-content">
+        <i class="fas fa-volume-up" id="overlay-icon"></i>
 
-                <h2 class="metrics-title"><i class="fas fa-chart-pie"></i> Live Metrics</h2>
-                <div class="metrics-grid">
-                    <div class="metric-box">
-                        <h3 id="vol-val">0%</h3>
-                        <p>VOLUME</p>
-                    </div>
-                    <div class="metric-box">
-                        <h3 id="dist-val">0mm</h3>
-                        <p>DISTANCE</p>
-                    </div>
-                    <div class="metric-box">
-                        <h3 id="acc-val">0%</h3>
-                        <p>ACCURACY</p>
-                    </div>
-                    <div class="metric-box">
-                        <h3 id="time-val">0ms</h3>
-                        <p>LATENCY</p>
-                    </div>
-                </div>
-            </section>
-        </main>
+        <div class="slider-track">
+          <div class="slider-fill" id="overlay-fill"></div>
+          <div class="slider-thumb" id="overlay-thumb"></div>
+        </div>
+
+        <span id="overlay-text">30</span>
+      </div>
     </div>
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
-</body>
+  </body>
 </html>
