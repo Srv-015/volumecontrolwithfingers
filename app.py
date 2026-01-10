@@ -4,7 +4,7 @@ import mediapipe as mp
 import numpy as np
 import time
 import math
-import pyautogui  
+import pyautogui  # <--- NEW IMPORT
 
 app = Flask(__name__)
 
@@ -77,7 +77,7 @@ def generate_frames():
     vol_history = []
     last_volume_update_time = 0
     
- 
+  
     previous_vol_target = 50 
     
     while True:
@@ -126,29 +126,29 @@ def generate_frames():
                     cv2.circle(frame, (tx, ty), 10, (50, 50, 255), cv2.FILLED)
                     cv2.circle(frame, (ix, iy), 10, (255, 50, 50), cv2.FILLED)
 
-                  
+                    
                     target_vol = map_value(pinch_dist_px, PINCH_THRESHOLD_LOW, PINCH_THRESHOLD_HIGH, 0, 100)
                     target_vol = int(np.clip(target_vol, 0, 100))
                     
-                 
+                    
                     vol_history.append(target_vol)
                     if len(vol_history) > 3: vol_history.pop(0) 
                     smooth_target_vol = int(np.mean(vol_history))
                     
                     project_state["current_volume"] = smooth_target_vol
                     
-                   
+                    
                     step_threshold = 2 
                     
                     if abs(smooth_target_vol - previous_vol_target) > step_threshold:
                         if smooth_target_vol > previous_vol_target:
-
+                            
                             pyautogui.press("volumeup")
                         else:
-
+                           
                             pyautogui.press("volumedown")
                         
-
+                       
                         previous_vol_target = smooth_target_vol
 
                     mid_x, mid_y = (tx+ix)//2, (ty+iy)//2
@@ -169,7 +169,7 @@ def generate_frames():
 
                 elif gesture_detected == "Open Hand":
                       mp_drawing.draw_landmarks(frame, hand_landmarks, mp_hands.HAND_CONNECTIONS)
-                    
+                      
 
                 if accuracy_score > 0.8:
                     cv2.rectangle(frame, (w - 170, 20), (w - 20, 60), (80, 172, 55), -1)
