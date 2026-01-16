@@ -4,7 +4,7 @@ import mediapipe as mp
 import numpy as np
 import time
 import math
-import pyautogui  # <--- NEW IMPORT
+import pyautogui
 
 app = Flask(__name__)
 
